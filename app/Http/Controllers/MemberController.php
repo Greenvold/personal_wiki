@@ -16,7 +16,17 @@ class MemberController extends Controller
         return view(
             'member.dashboard',
             [
-                'guides' => Guide::myGuides()
+                'guides' => Guide::myGuidesSearched()
+            ]
+        );
+    }
+
+    public function dashboardTabular()
+    {
+        return view(
+            'member.dashboard_tabular',
+            [
+                'guides' => Guide::myGuidesSearched()
             ]
         );
     }

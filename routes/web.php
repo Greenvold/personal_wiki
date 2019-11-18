@@ -28,7 +28,7 @@ Route::get('/contact', 'HomeController@contact')->name('home.contact');
 
 Route::resource('/guide', 'GuideController');
 
-Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview');
+Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview')->middleware('auth');
 
 Route::post('/guide/{guide}/enroll', 'GuideController@enroll')->name('guide.enroll');
 
@@ -37,5 +37,7 @@ Route::post('/guide/{guide}/like', 'LikeController@likeGuide')->name('guide.like
 Route::post('/guide/{guide}/dislike', 'LikeController@disLikeGuide')->name('guide.dislike');
 
 Route::get('/member/dashboard', 'MemberController@dashboard')->name('member.dashboard');
+
+Route::get('/member/dashboard-tabular', 'MemberController@dashboardTabular')->name('member.dashboard-tabular');
 
 Route::get('/notifications', 'NotificationController@index')->name('notifications.index');

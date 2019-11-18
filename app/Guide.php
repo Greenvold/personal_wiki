@@ -66,6 +66,28 @@ class Guide extends Model
         })->paginate(4);
     }
 
+    public function scopeMyGuidesSearched($query)
+    {
+        $search = request()->query('search');
+
+        if ($search) {
+            return Guide::where('title', 'LIKE', "%{$search}%")
+                ->whereHas('users', function ($q) {
+                    $q->where('user_id', auth()->user()->id);
+                })
+                ->orWhereHas('tags', function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%");
+                })
+                ->whereHas('users', function ($q) {
+                    $q->where('user_id', auth()->user()->id);
+                })->paginate(5);
+        } else {
+            return Guide::whereHas('users', function ($q) {
+                $q->where('user_id', auth()->user()->id);
+            })->paginate(6);
+        }
+    }
+
     public function likedByuser($id)
     {
         return Like::where('likeable_type', 'App\Guide')->where('likeable_id', $id)->where('user_id', auth()->user()->id)->exists();
