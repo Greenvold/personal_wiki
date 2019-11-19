@@ -21,8 +21,8 @@ My Dashboard
                 <div class="col-lg-4 mb-3">
                     <a href="{{ route('guide.show', $guide->slug) }}" class="card guide">
                         <img src="{{ asset('storage/' . $guide->image) }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$guide->title}}</h5>
+                        <div class="card-body card-body-sm">
+                            <h5 class="card-title-lg">{{$guide->title}}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk
                                 of the card's content.</p>
                         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Guide;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,17 @@ class HomeController extends Controller
         return view('home.index', [
             'guides' => Guide::searched()
         ]);
+    }
+
+    function fetch_data(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $guides = Guide::with('users')->simplePaginate(4);
+
+            return view('home.pagination_data', compact('guides'))->render();
+        }
     }
 
     public function getStarted()

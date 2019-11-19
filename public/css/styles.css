@@ -39,11 +39,23 @@ body {
     color: inherit;
 }
 
-.card-title {
+/* Modified fotn size of cards of courses */
+.card-title-lg {
     font-size: 110%;
     font-weight: 700;
 }
-
-.card-body {
+/* Modified fotn size of cards of courses */
+.card-body-sm {
     font-size: 85%;
+}
+
+/* Used for centering the header on most of the home pages */
+.vertical-center {
+    min-height: 100%;
+    /* Fallback for browsers do NOT support vh unit */
+    min-height: 45vh;
+    /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
 }

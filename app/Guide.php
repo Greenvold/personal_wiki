@@ -14,6 +14,7 @@ class Guide extends Model
     use SoftDeletes;
     use Sluggable;
 
+
     protected $fillable = ['title', 'content', 'published_at', 'image', 'user_id', 'short_description'];
     /**
      * Return the sluggable configuration array for this model.
@@ -106,9 +107,9 @@ class Guide extends Model
             return Guide::where('title', 'LIKE', "%{$search}%")
                 ->orWhereHas('tags', function ($q) use ($search) {
                     $q->where('title', 'LIKE', "%{$search}%");
-                })->paginate(8);
+                })->simplePaginate(4);
         } else {
-            return Guide::orderBy('published_at', 'desc')->paginate(8);
+            return Guide::orderBy('published_at', 'desc')->simplePaginate(4);
         }
     }
 }
