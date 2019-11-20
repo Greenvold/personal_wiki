@@ -102,6 +102,9 @@ Guide preview
                         <p>You have now new notifications.</p>
                         @endforelse
                     </ul>
+                    <div class="d-flex justify-content-center mt-3">
+                        {!! $readNotifications->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

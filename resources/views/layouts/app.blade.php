@@ -14,6 +14,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -37,9 +40,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a href="{{route('home.get-started')}}"
-                                class="nav-link {{Request::is('get-started') ? 'active' : ''}}">Get started</a>
+                                class="nav-link disabled {{Request::is('get-started') ? 'active' : ''}}">Get started</a>
                         </li>
                         {{-- Guide --}}
                         <li class="nav-item dropdown">
@@ -49,25 +52,25 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('guide.index') }}">View all guides</a>
-                                <a class="dropdown-item" href="#">Categories to be filled</a>
+                                <a class="dropdown-item disabled" href="#">Categories to be filled</a>
                             </div>
                         </li>
 
                         {{-- Courses --}}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Courses
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item disabled" href="#">Action</a>
+                                <a class="dropdown-item disabled" href="#">Another action</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item disabled" href="#">Something else here</a>
                             </div>
                         </li>
                         <li class="nav-item"><a href="{{route('home.faq')}}"
-                                class="nav-link {{Request::is('faq') ? 'active' : ''}}">FAQ</a></li>
+                                class="nav-link disabled {{Request::is('faq') ? 'active' : ''}}">FAQ</a></li>
                         <li class="nav-item"><a href="{{route('home.contact')}}"
                                 class="nav-link {{Request::is('contact') ? 'active' : ''}}">Contact</a></li>
                     </ul>
@@ -93,21 +96,25 @@
                             class="nav-link {{Request::is('notifications') ? 'active' : ''}}"><span
                                 class="badge badge-info">{{auth()->user()->unreadNotifications->count()}}</span>
                             Notifications</a>
+                        @if (auth()->user()->hasGroup('Teacher'))
+
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Teacher's zone
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Guides</a>
+                                <a class="dropdown-item" href="{{ route('teacher.dashboard-general') }}">My Teacher
+                                    Dashboard</a>
                                 <a class="dropdown-item" href="{{ route('guide.create') }}">Create guide</a>
-                                <a class="dropdown-item" href="#">Create Course</a>
-                                <a class="dropdown-item" href="#">Courses</a>
+                                <a class="dropdown-item disabled" href="#">Create Course</a>
+                                <a class="dropdown-item disabled" href="#">Courses</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">My teacher profile</a>
+                                <a class="dropdown-item disabled" href="#">My teacher profile</a>
                             </div>
                         </li>
-
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

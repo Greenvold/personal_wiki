@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="text-center animated fadeIn">
                 <h3 class="">Welcome to NaučMa</h3>
-                <small>What do you want to lear today?</small>
+                <small>What do you want to learn today?</small>
             </div>
             <div class="row mt-3">
                 <div class="col-md-4 offset-md-4">

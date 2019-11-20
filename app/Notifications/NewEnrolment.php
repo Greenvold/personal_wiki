@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewEnrolment extends Notification
+class NewEnrolment extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -31,7 +31,7 @@ class NewEnrolment extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -43,7 +43,7 @@ class NewEnrolment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('You have a new student that enrolled to your guide.')
+            ->line('You have a new student that enrolled to your' . $this->guide->title . '.')
             ->action('View', url('/'))
             ->line('Thank you for using our application!');
     }

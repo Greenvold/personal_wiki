@@ -1,5 +1,6 @@
 <?php
 
+use App\Group;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -31,5 +32,13 @@ class UsersTableSeeder extends Seeder
             'email' => 'gabriel.vadkerti@gmail.com',
             'password' => Hash::make('password')
         ]);
+
+
+        $group1 = Group::create([
+            'title' => 'Teacher',
+            'description' => 'Group for teachers.'
+        ]);
+
+        $user1->groups()->attach($group1);
     }
 }

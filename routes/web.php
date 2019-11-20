@@ -15,7 +15,7 @@ Route::get('/', function () {
     return redirect(route('home'));
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -27,19 +27,36 @@ Route::get('/faq', 'HomeController@faq')->name('home.faq');
 
 Route::get('/contact', 'HomeController@contact')->name('home.contact');
 
+Route::get('/contact/send', 'ContactController@send')->name('contact.send');
 
-Route::resource('/guide', 'GuideController');
 
-Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview')->middleware('auth');
+Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview');
 
-Route::post('/guide/{guide}/enroll', 'GuideController@enroll')->name('guide.enroll');
+//Member zone
 
-Route::post('/guide/{guide}/like', 'LikeController@likeGuide')->name('guide.like');
+Route::middleware(['auth'])->group(function () {
 
-Route::post('/guide/{guide}/dislike', 'LikeController@disLikeGuide')->name('guide.dislike');
+    Route::post('/guide/{guide}/enroll', 'GuideController@enroll')->name('guide.enroll');
 
-Route::get('/member/dashboard', 'MemberController@dashboard')->name('member.dashboard');
+    Route::post('/guide/{guide}/like', 'LikeController@likeGuide')->name('guide.like');
 
-Route::get('/member/dashboard-tabular', 'MemberController@dashboardTabular')->name('member.dashboard-tabular');
+    Route::post('/guide/{guide}/dislike', 'LikeController@disLikeGuide')->name('guide.dislike');
 
-Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
+    Route::get('/member/dashboard', 'MemberController@dashboard')->name('member.dashboard');
+
+    Route::get('/member/dashboard-tabular', 'MemberController@dashboardTabular')->name('member.dashboard-tabular');
+
+    Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
+});
+
+
+//Teacher zone
+
+Route::middleware(['isTeacher', 'auth'])->group(function () {
+
+    Route::get('/teacher/dashboard-general', 'TeacherController@dashboard')->name('teacher.dashboard-general');
+
+    Route::get('/teacher/dashboard-tabular', 'TeacherController@dashboard')->name('teacher.dashboard-tabular');
+
+    Route::resource('/guide', 'GuideController');
+});

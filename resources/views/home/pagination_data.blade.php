@@ -1,7 +1,7 @@
-<div class="row">
+<div class="row animated fadeIn">
     @foreach ($guides as $guide)
     <div class="col-lg-3 mb-3 col-md-3">
-        <a href="{{ route('guide.preview', $guide->slug) }}" class="card guide shadow">
+        <a href="{{ route('guide.preview', $guide->slug) }}" class="card guide shadow scale">
             <img src="{{ asset('storage/' . $guide->image) }}" class="card-img-top" alt="...">
             <div class="card-body card-body-sm">
                 <h5 class="card-title-lg">{{\Illuminate\Support\Str::limit($guide->title,35)}}</h5>

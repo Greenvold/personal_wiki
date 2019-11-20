@@ -3,23 +3,18 @@
 My Dashboard
 @endsection
 @section('content')
+
+@include('partials.welcome',['header' => 'Welcome to your dashboard', 'underHeading' => 'All your enrolled guides
+and courses.'])
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <div class="jumbotron">
-                <h1 class="display-4">Welcome to your dashboard</h1>
-                <p class="lead">In here you can find list of all your enrolled and bought guides and courses.</p>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-lg-9">
-            <h4>Enrolled guides</h4>
+            <h4 class="content-heading">Enrolled guides</h4>
             <hr>
             <div class="row">
                 @foreach ($guides as $guide)
                 <div class="col-lg-4 mb-3">
-                    <a href="{{ route('guide.show', $guide->slug) }}" class="card guide">
+                    <a href="{{ route('guide.show', $guide->slug) }}" class="card guide scale">
                         <img src="{{ asset('storage/' . $guide->image) }}" class="card-img-top" alt="...">
                         <div class="card-body card-body-sm">
                             <h5 class="card-title-lg">{{$guide->title}}</h5>
@@ -29,6 +24,9 @@ My Dashboard
                     </a>
                 </div>
                 @endforeach
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                {!! $guides->links() !!}
             </div>
         </div>
         <div class="col-lg-3">
@@ -41,7 +39,7 @@ My Dashboard
             <div class="list-group">
                 <a href="{{ route('member.dashboard-tabular') }}" class="list-group-item list-group-item-action">Tabular
                     view</a>
-                <a href="#" class="list-group-item list-group-item-action">Messages</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">Messages</a>
                 <a href="#" class="list-group-item list-group-item-action">Settings</a>
             </div>
         </div>

@@ -55,6 +55,11 @@ class Guide extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function hasTag($tag)
+    {
+        return in_array($tag, $this->tags->pluck('title')->toArray());
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class);
@@ -81,7 +86,7 @@ class Guide extends Model
                 })
                 ->whereHas('users', function ($q) {
                     $q->where('user_id', auth()->user()->id);
-                })->paginate(5);
+                })->paginate(6);
         } else {
             return Guide::whereHas('users', function ($q) {
                 $q->where('user_id', auth()->user()->id);
@@ -110,6 +115,23 @@ class Guide extends Model
                 })->simplePaginate(4);
         } else {
             return Guide::orderBy('published_at', 'desc')->simplePaginate(4);
+        }
+    }
+
+    //Teacher section
+
+    public function scopeTeacherGuides($query)
+    {
+        $search = request()->query('search');
+
+        if ($search) {
+            return Guide::where('title', 'LIKE', "%{$search}%")
+                ->where('user_id', auth()->user()->id)
+                ->orWhereHas('tags', function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%");
+                })->where('user_id', auth()->user()->id)->simplePaginate(6);
+        } else {
+            return Guide::where('user_id', auth()->user()->id)->simplePaginate(6);
         }
     }
 }

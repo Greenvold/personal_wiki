@@ -11,7 +11,7 @@ Naucma - Contact
                     Contact us
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('contact.send') }}" method="POST">
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label for="title">Your email address</label>

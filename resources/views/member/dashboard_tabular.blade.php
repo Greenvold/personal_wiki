@@ -3,15 +3,9 @@
 My Dashboard
 @endsection
 @section('content')
+@include('partials.welcome',['header' => 'Welcome to your dashboard', 'underHeading' => 'All your enrolled guides
+and courses.'])
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <div class="jumbotron">
-                <h1 class="display-4">Welcome to your dashboard</h1>
-                <p class="lead">In here you can find list of all your enrolled and bought guides and courses.</p>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-lg-9">
             <h4>Enrolled guides</h4>

@@ -86,7 +86,8 @@ class GuideController extends Controller
     public function edit(Guide $guide)
     {
         return view('guide.create', [
-            'guide' => $guide
+            'guide' => $guide,
+            'tags' => Tag::all()
         ]);
     }
 
@@ -170,14 +171,20 @@ class GuideController extends Controller
 
     public function preview(Guide $guide)
     {
-        $enrolled = $guide->users()->where('user_id', auth()->user()->id)->exists();
-
-        if ($enrolled) {
-            return redirect(route('guide.show', $guide->slug));
-        } else {
+        if (!auth()->user()) {
             return view('guide.preview', [
                 'guide' => $guide
             ]);
+        } else {
+            $enrolled = $guide->users()->where('user_id', auth()->user()->id)->exists();
+
+            if ($enrolled) {
+                return redirect(route('guide.show', $guide->slug));
+            } else {
+                return view('guide.preview', [
+                    'guide' => $guide
+                ]);
+            }
         }
     }
 }

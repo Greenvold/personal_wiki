@@ -1,5 +1,6 @@
 body {
     background-color: #eee !important;
+    font-family: "Open Sans", sans-serif;
 }
 
 .navbar {
@@ -27,11 +28,14 @@ body {
 }
 
 .card {
+    min-height: 340px;
+}
+.scale {
     transition: all 0.7s;
     min-height: 340px;
 }
 
-.card:hover {
+.scale:hover {
     transform: scale(1.1);
 }
 
@@ -43,6 +47,7 @@ body {
 .card-title-lg {
     font-size: 110%;
     font-weight: 700;
+    font-family: "Montserrat", sans-serif;
 }
 /* Modified fotn size of cards of courses */
 .card-body-sm {
@@ -58,4 +63,10 @@ body {
 
     display: flex;
     align-items: center;
+}
+
+.content-heading {
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }

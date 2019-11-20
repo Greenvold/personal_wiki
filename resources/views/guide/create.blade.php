@@ -6,7 +6,7 @@ New guide
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-10 offset-lg-1">
-            <div class="card">
+            <div class="card animated fadeIn">
                 <div class="card-header">New guide</div>
                 <div class="card-body">
                     <form action="{{isset($guide) ? route('guide.update',$guide->slug) : route('guide.store')}}"
@@ -42,7 +42,7 @@ New guide
                                 <select name="tags[]" id="tags" class="form-control tag-selector" multiple>
                                     @foreach ($tags as $tag)
                                     <option value="{{$tag->id}}" @if (isset($guide)) @if ($guide->
-                                        hasGroupName($tag->title))
+                                        hasTag($tag->title))
                                         selected
                                         @endif
                                         @endif
