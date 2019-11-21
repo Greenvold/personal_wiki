@@ -44,29 +44,17 @@
                             <a href="{{route('home.get-started')}}"
                                 class="nav-link disabled {{Request::is('get-started') ? 'active' : ''}}">Get started</a>
                         </li>
-                        {{-- Guide --}}
+                        {{-- Guide & Courses --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Guides
+                                Guides & Courses
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('guide.index') }}">View all guides</a>
-                                <a class="dropdown-item disabled" href="#">Categories to be filled</a>
-                            </div>
-                        </li>
+                                <a class="dropdown-item" href="{{ route('guide.index') }}">View all guides & courses</a>
+                                <a class="dropdown-item disabled" href="#">IT</a>
 
-                        {{-- Courses --}}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Courses
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item disabled" href="#">Action</a>
-                                <a class="dropdown-item disabled" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item disabled" href="#">Something else here</a>
+
                             </div>
                         </li>
                         <li class="nav-item"><a href="{{route('home.faq')}}"
@@ -94,7 +82,7 @@
                             class="nav-link {{Request::is('member/dashboard*') ? 'active' : ''}}">My dashboard</a>
                         <a href="{{ route('notifications.index') }}"
                             class="nav-link {{Request::is('notifications') ? 'active' : ''}}"><span
-                                class="badge badge-info">{{auth()->user()->unreadNotifications->count()}}</span>
+                                class="badge badge-naucma">{{auth()->user()->unreadNotifications->count()}}</span>
                             Notifications</a>
                         @if (auth()->user()->hasGroup('Teacher'))
 
@@ -179,6 +167,7 @@
 });
     </script>
     @yield('scripts')
+
 </body>
 
 </html>

@@ -32,6 +32,7 @@ Route::get('/contact/send', 'ContactController@send')->name('contact.send');
 
 Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview');
 
+Route::resource('/guide', 'GuideController');
 //Member zone
 
 Route::middleware(['auth'])->group(function () {
@@ -57,6 +58,4 @@ Route::middleware(['isTeacher', 'auth'])->group(function () {
     Route::get('/teacher/dashboard-general', 'TeacherController@dashboard')->name('teacher.dashboard-general');
 
     Route::get('/teacher/dashboard-tabular', 'TeacherController@dashboard')->name('teacher.dashboard-tabular');
-
-    Route::resource('/guide', 'GuideController');
 });

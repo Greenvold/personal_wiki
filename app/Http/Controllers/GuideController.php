@@ -6,6 +6,7 @@ use App\Guide;
 use App\Http\Requests\Guide\CreateGuideRequest;
 use App\Http\Requests\Guide\UpdateGuideRequest;
 use App\Notifications\NewEnrolment;
+use App\Recent;
 use Illuminate\Http\Request;
 use App\Tag;
 use App\User;
@@ -19,8 +20,32 @@ class GuideController extends Controller
      */
     public function index()
     {
-        //
-        return view('guide.index');
+        if (!auth()->user()) {
+            return view('guide.index', [
+                'guides' => Guide::searched()
+            ]);
+        } else {
+            $recentViewed = Guide::whereIn(
+                'id',
+                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(2)->get()
+            )->get();
+
+            return view('guide.index', [
+                'guides' => Guide::searched(),
+                'recents' => $recentViewed
+            ]);
+        }
+    }
+
+    function fetch_data(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $guides = Guide::with('users')->simplePaginate(4);
+
+            return view('home.pagination_data', compact('guides'))->render();
+        }
     }
 
     /**
@@ -72,8 +97,16 @@ class GuideController extends Controller
      */
     public function show(Guide $guide)
     {
+
+        $recent = Recent::where('user_id', auth()->user()->id)
+            ->where('recentable_id', $guide->id)
+            ->where('recentable_type', 'App\Guide')
+            ->first();
+        $recent->touch();
+
         return view('guide.show', [
-            'guide' => $guide
+            'guide' => $guide,
+            'recent' => $recent
         ]);
     }
 
@@ -166,6 +199,11 @@ class GuideController extends Controller
 
         $guide->author->notify(new NewEnrolment($guide));
 
+        Recent::create([
+            'recentable_id' => $guide->id,
+            'recentable_type' => 'App\Guide',
+            'user_id' => auth()->user()->id
+        ]);
         return redirect(route('member.dashboard'));
     }
 
