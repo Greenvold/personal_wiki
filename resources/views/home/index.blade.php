@@ -3,18 +3,18 @@
 Naucma - Jediny Slovensky Portal
 @endsection
 @section('content')
-@include('partials.header_v2',['heading' => 'Welcome to NaučMa', 'underHeading' => 'What do you want to learn today?'])
+@include('partials.header',['heading' => 'Welcome to NaučMa', 'underHeading' => 'What do you want to learn today?'])
 <div class="container">
+    @auth
+    @include('partials.recently_viewed')
+    @else
     <div class="row mt-5">
-        <div class="col-lg-12 col-md-12">
-            <h4 class="content-heading">Recent guides and courses</h4>
-            <hr class="shadow">
-            <div id="cards">
-                @include('home.pagination_data')
-            </div>
+        <div class="col-md-8 offset-md-2 text-center">
+            become member
         </div>
     </div>
-
+    @endauth
+    @include('partials.recently_added')
 </div>
 <div class="container-fluid questions">
     <div class="row mt-5">
@@ -44,18 +44,22 @@ Naucma - Jediny Slovensky Portal
          $(document).on('click', '.pagination a', function(event){
           event.preventDefault(); 
           var page = $(this).attr('href').split('page=')[1];
-          fetch_data(page);
+          var container = ($(this).parents()[4].id);
+          fetch_data(page,container);
+
          });
 
-         function fetch_data(page)
+         function fetch_data(page,container)
          {
           $.ajax({
-           url:"/home/fetch_data?page="+page,
+           url:"/home/fetch_data/?page="+page,
            type:"Get",
            method:"get",
+           data: {type : container},
            success:function(data)
            {
-            $('#cards').html(data);
+
+            $('#'+ container).html(data);
            }
           });
          }
@@ -63,31 +67,3 @@ Naucma - Jediny Slovensky Portal
         });
 </script>
 @endsection
-
-
-<style>
-    .questions {
-        height: 35vh;
-        background-image: linear-gradient(48deg, rgba(90, 90, 232, 1) 19%, rgba(103, 161, 197, 1) 100%);
-        font-family: 'Montserrat', sans-serif;
-        color: #fff;
-    }
-
-    .button-white {
-        border-radius: 30px;
-        background-color: #fff;
-        color: black;
-        padding: 14px;
-        text-decoration: none !important;
-        transition: all .5s;
-        display: inline-block;
-        backface-visibility: hidden;
-
-
-    }
-
-    .button-white:hover {
-        transform: translateY(-5px);
-        color: black;
-    }
-</style>

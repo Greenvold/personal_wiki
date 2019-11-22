@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Guide;
+use App\Recent;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -25,21 +26,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index', [
-            'guides' => Guide::searched()
-        ]);
-    }
+        if (!auth()->user()) {
+            return view('home.index', [
+                'guides' => Guide::searched()
+            ]);
+        } else {
+            $recentViewed = Guide::whereIn(
+                'id',
+                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(2)->get()
+            )->simplePaginate(2);
 
-    function fetch_data(Request $request)
-    {
-
-        if ($request->ajax()) {
-
-            $guides = Guide::with('users')->simplePaginate(4);
-
-            return view('home.pagination_data', compact('guides'))->render();
+            return view('home.index', [
+                'guides' => Guide::searched(),
+                'recents' => $recentViewed
+            ]);
         }
     }
+
 
     public function getStarted()
     {

@@ -36,7 +36,7 @@ Naucma - Get Started
                     {!!$guide->content!!}
                 </div>
                 <div class="card-footer">
-                    {{$guide->published_at}} by {{$guide->author->name}}1
+                    {{$guide->published_at}} by {{$guide->author->name}}
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
     {{-- <meta id="token" name="token" content="{ { csrf_token() } }"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -45,17 +45,8 @@
                                 class="nav-link disabled {{Request::is('get-started') ? 'active' : ''}}">Get started</a>
                         </li>
                         {{-- Guide & Courses --}}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Guides & Courses
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('guide.index') }}">View all guides & courses</a>
-                                <a class="dropdown-item disabled" href="#">IT</a>
-
-
-                            </div>
+                        <li class="nav-item ">
+                            <a href="{{ route('guide.index') }}" class="nav-link">Guides & Courses</a>
                         </li>
                         <li class="nav-item"><a href="{{route('home.faq')}}"
                                 class="nav-link disabled {{Request::is('faq') ? 'active' : ''}}">FAQ</a></li>

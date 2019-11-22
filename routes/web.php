@@ -19,7 +19,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home/fetch_data', 'HomeController@fetch_data');
+Route::get('/home/fetch_data', 'GuideController@fetch_data');
 
 Route::get('/get-started', 'HomeController@getStarted')->name('home.get-started');
 

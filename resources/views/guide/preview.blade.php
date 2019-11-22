@@ -11,10 +11,15 @@ Guide preview
                     {{$guide->title}}
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"></div>
+                    </div>
                     {!!$guide->short_description!!}
                     <form action="{{ route('guide.enroll',$guide->slug) }}" method="POST">
                         @csrf
-                        <button class="btn btn-success" type="submit">Enroll</button>
+                        <button class="btn btn-success" type="submit">Enroll and go to guide</button>
                     </form>
                 </div>
                 <div class="card-footer">

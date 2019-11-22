@@ -10,7 +10,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent2">
                     <ul class="navbar-nav mr-auto categories-ul">
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('guide.index', ['search'=>'SharePoint']) }}">
                             <i class="fa fa-laptop"></i>
                             IT
                         </a>

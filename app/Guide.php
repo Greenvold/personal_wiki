@@ -134,4 +134,18 @@ class Guide extends Model
             return Guide::where('user_id', auth()->user()->id)->simplePaginate(6);
         }
     }
+
+    public function scopeWeb()
+    {
+        return Guide::whereHas('tags', function ($q) {
+            $q->where('title', 'Front-end')->orWhere('title', 'Back-end');
+        })->simplePaginate(4);
+    }
+
+    public function scopeOffice()
+    {
+        return Guide::whereHas('tags', function ($q) {
+            $q->where('title', 'Microsoft Office')->orWhere('title', 'MS Excel')->orWhere('title', 'MS Word')->orWhere('title', 'Microsoft Office Excel')->orWhere('title', 'MS Excel');
+        })->simplePaginate(4);
+    }
 }

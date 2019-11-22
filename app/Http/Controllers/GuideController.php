@@ -20,9 +20,12 @@ class GuideController extends Controller
      */
     public function index()
     {
+
         if (!auth()->user()) {
             return view('guide.index', [
-                'guides' => Guide::searched()
+                'guides' => Guide::searched(),
+                'webGuides' => Guide::web(),
+                'officeGuides' => Guide::office()
             ]);
         } else {
             $recentViewed = Guide::whereIn(
@@ -32,22 +35,42 @@ class GuideController extends Controller
 
             return view('guide.index', [
                 'guides' => Guide::searched(),
+                'webGuides' => Guide::web(),
+                'officeGuides' => Guide::office(),
                 'recents' => $recentViewed
             ]);
         }
     }
+
 
     function fetch_data(Request $request)
     {
 
         if ($request->ajax()) {
 
-            $guides = Guide::with('users')->simplePaginate(4);
+            $type = $_GET['type'];
 
-            return view('home.pagination_data', compact('guides'))->render();
+            switch ($type) {
+                case 'recents':
+                    $passedGuides = Guide::with('users')->simplePaginate(4);
+                    break;
+                case 'officeGuides':
+                    $passedGuides = Guide::office();
+                    break;
+                case 'webGuides':
+                    $passedGuides = Guide::web();
+                    break;
+
+
+                default:
+
+                    break;
+            }
+
+
+            return view('partials.pagination_data', compact('passedGuides'))->render();
         }
     }
-
     /**
      * Show the form for creating a new resource.
      *
