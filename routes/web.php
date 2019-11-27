@@ -32,12 +32,18 @@ Route::get('/contact/send', 'ContactController@send')->name('contact.send');
 
 Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview');
 
-Route::resource('/guide', 'GuideController');
+Route::get('/course/{course}/preview', 'CourseController@preview')->name('course.preview');
+
+
 //Member zone
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::resource('/guide', 'GuideController');
+
     Route::post('/guide/{guide}/enroll', 'GuideController@enroll')->name('guide.enroll');
+
+    Route::post('/course/{course}/enroll', 'CourseController@enroll')->name('course.enroll');
 
     Route::post('/guide/{guide}/like', 'LikeController@likeGuide')->name('guide.like');
 
@@ -48,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/member/dashboard-tabular', 'MemberController@dashboardTabular')->name('member.dashboard-tabular');
 
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
+
+    Route::get('/video/{fileName}', 'VideoController@getVideo')->name('video');
 });
 
 
@@ -55,7 +63,14 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['isTeacher', 'auth'])->group(function () {
 
-    Route::get('/teacher/dashboard-general', 'TeacherController@dashboard')->name('teacher.dashboard-general');
+    Route::get('/teacher/guides-general', 'TeacherController@guides')->name('teacher.guides-general');
 
     Route::get('/teacher/dashboard-tabular', 'TeacherController@dashboard')->name('teacher.dashboard-tabular');
+
+    Route::get('/teacher/courses-general', 'TeacherController@courses')->name('teacher.courses-general');
+
+    Route::get('teacher/dashboard', 'TeacherController@dashboard')->name('teacher.dashboard');
+
+
+    Route::resource('/course', 'CourseController');
 });

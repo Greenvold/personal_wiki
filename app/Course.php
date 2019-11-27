@@ -2,19 +2,18 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Tag;
 use App\User;
 
-class Guide extends Model
+class Course extends Model
 {
     use SoftDeletes;
     use Sluggable;
-
-
+    //
     protected $fillable = ['title', 'content', 'published_at', 'image', 'user_id', 'short_description'];
     /**
      * Return the sluggable configuration array for this model.
@@ -67,7 +66,7 @@ class Guide extends Model
 
     public function scopeMyGuides()
     {
-        return Guide::whereHas('users', function ($q) {
+        return Course::whereHas('users', function ($q) {
             $q->where('user_id', auth()->user()->id);
         })->paginate(4);
     }
@@ -77,7 +76,7 @@ class Guide extends Model
         $search = request()->query('search');
 
         if ($search) {
-            return Guide::where('title', 'LIKE', "%{$search}%")
+            return Course::where('title', 'LIKE', "%{$search}%")
                 ->whereHas('users', function ($q) {
                     $q->where('user_id', auth()->user()->id);
                 })
@@ -88,7 +87,7 @@ class Guide extends Model
                     $q->where('user_id', auth()->user()->id);
                 })->paginate(6);
         } else {
-            return Guide::whereHas('users', function ($q) {
+            return Course::whereHas('users', function ($q) {
                 $q->where('user_id', auth()->user()->id);
             })->paginate(6);
         }
@@ -96,12 +95,12 @@ class Guide extends Model
 
     public function likedByuser($id)
     {
-        return Like::where('likeable_type', 'App\Guide')->where('likeable_id', $id)->where('user_id', auth()->user()->id)->exists();
+        return Like::where('likeable_type', 'App\Course')->where('likeable_id', $id)->where('user_id', auth()->user()->id)->exists();
     }
 
     public function disLikedByuser($id)
     {
-        return Dislike::where('dislikeable_type', 'App\Guide')->where('dislikeable_id', $id)->where('user_id', auth()->user()->id)->exists();
+        return Dislike::where('dislikeable_type', 'App\Course')->where('dislikeable_id', $id)->where('user_id', auth()->user()->id)->exists();
     }
 
     public function scopeSearched($query)
@@ -109,42 +108,42 @@ class Guide extends Model
         $search = request()->query('search');
 
         if ($search) {
-            return Guide::where('title', 'LIKE', "%{$search}%")
+            return Course::where('title', 'LIKE', "%{$search}%")
                 ->orWhereHas('tags', function ($q) use ($search) {
                     $q->where('title', 'LIKE', "%{$search}%");
                 })->simplePaginate(4);
         } else {
-            return Guide::orderBy('published_at', 'desc')->simplePaginate(4);
+            return Course::orderBy('published_at', 'desc')->simplePaginate(4);
         }
     }
 
     //Teacher section
 
-    public function scopeTeacherGuides($query)
+    public function scopeTeacherCourses($query)
     {
         $search = request()->query('search');
 
         if ($search) {
-            return Guide::where('title', 'LIKE', "%{$search}%")
+            return Course::where('title', 'LIKE', "%{$search}%")
                 ->where('user_id', auth()->user()->id)
                 ->orWhereHas('tags', function ($q) use ($search) {
                     $q->where('title', 'LIKE', "%{$search}%");
                 })->where('user_id', auth()->user()->id)->simplePaginate(6);
         } else {
-            return Guide::where('user_id', auth()->user()->id)->simplePaginate(6);
+            return Course::where('user_id', auth()->user()->id)->simplePaginate(6);
         }
     }
 
     public function scopeWeb()
     {
-        return Guide::whereHas('tags', function ($q) {
+        return Course::whereHas('tags', function ($q) {
             $q->where('title', 'Front-end')->orWhere('title', 'Back-end');
         });
     }
 
     public function scopeOffice()
     {
-        return Guide::whereHas('tags', function ($q) {
+        return Course::whereHas('tags', function ($q) {
             $q->where('title', 'Microsoft Office')->orWhere('title', 'MS Excel')->orWhere('title', 'MS Word')->orWhere('title', 'Microsoft Office Excel')->orWhere('title', 'MS Excel');
         });
     }
@@ -154,19 +153,18 @@ class Guide extends Model
         return $this->morphOne('App\Recent', 'recentable');
     }
 
-
-    public function scopeTeacherGuidesNoPaginate($query)
+    public function scopeTeacherCoursesNoPaginate($query)
     {
         $search = request()->query('search');
 
         if ($search) {
-            return Guide::where('title', 'LIKE', "%{$search}%")
+            return Course::where('title', 'LIKE', "%{$search}%")
                 ->where('user_id', auth()->user()->id)
                 ->orWhereHas('tags', function ($q) use ($search) {
                     $q->where('title', 'LIKE', "%{$search}%");
                 })->where('user_id', auth()->user()->id);
         } else {
-            return Guide::where('user_id', auth()->user()->id);
+            return Course::where('user_id', auth()->user()->id);
         }
     }
 }

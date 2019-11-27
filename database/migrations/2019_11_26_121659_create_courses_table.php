@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGuidesTable extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateGuidesTable extends Migration
      */
     public function up()
     {
-        Schema::create('guides', function (Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('slug');
             $table->string('title');
@@ -21,7 +21,7 @@ class CreateGuidesTable extends Migration
             $table->date('published_at');
             $table->text('content');
             $table->string('image');
-            $table->string('type')->default('guide');
+            $table->string('type')->default('course');
             $table->integer('user_id');
             $table->softDeletes();
             $table->timestamps();
@@ -35,6 +35,6 @@ class CreateGuidesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guides');
+        Schema::dropIfExists('courses');
     }
 }

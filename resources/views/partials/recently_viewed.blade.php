@@ -5,7 +5,13 @@
     </div>
     @foreach ($recents as $recent)
     <div class="col-md-6">
-        <a href="{{ route('guide.preview', $recent->slug) }}" class="card mb-3 scale">
+        <a href="
+        @if ($recent->type == 'guide')
+            {{ route('guide.preview', $recent->slug) }}
+        @else
+            {{ route('course.preview', $recent->slug) }}
+        @endif
+        " class="card mb-3 scale">
             <div class="row no-gutters recent ">
                 @php
                 if(rand(0,1) == 1)

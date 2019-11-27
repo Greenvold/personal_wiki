@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Guide;
 use App\Http\Requests\Guide\CreateGuideRequest;
 use App\Http\Requests\Guide\UpdateGuideRequest;
@@ -24,20 +25,26 @@ class GuideController extends Controller
         if (!auth()->user()) {
             return view('guide.index', [
                 'guides' => Guide::searched(),
-                'webGuides' => Guide::web(),
-                'officeGuides' => Guide::office()
+                'webGuides' => Guide::web()->union(Course::web())->simplePaginate(6),
+                'officeGuides' => Guide::office()->union(Course::office())->simplePaginate(6)
             ]);
         } else {
-            $recentViewed = Guide::whereIn(
+            $recentViewedGuides = Guide::whereIn(
                 'id',
-                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(2)->get()
+                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(1)->get()
             )->get();
+
+            $recentViewedCourses = Course::whereIn(
+                'id',
+                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Course')->orderBy('updated_at', 'desc')->take(1)->get()
+            )->get();
+            $merged = $recentViewedCourses->merge($recentViewedGuides);
 
             return view('guide.index', [
                 'guides' => Guide::searched(),
-                'webGuides' => Guide::web(),
-                'officeGuides' => Guide::office(),
-                'recents' => $recentViewed
+                'webGuides' => Guide::web()->union(Course::web())->simplePaginate(6),
+                'officeGuides' => Guide::office()->union(Course::office())->simplePaginate(6),
+                'recents' => $merged
             ]);
         }
     }
@@ -53,22 +60,22 @@ class GuideController extends Controller
             switch ($type) {
                 case 'recents':
                     $passedGuides = Guide::with('users')->simplePaginate(4);
+                    $title = "Recently added guides & courses";
                     break;
                 case 'officeGuides':
                     $passedGuides = Guide::office();
+                    $title = "MICROSOFT OFFICE GUIDES & COURSES";
                     break;
                 case 'webGuides':
                     $passedGuides = Guide::web();
+                    $title = "WEB DEVELOPMENT GUIDES & COURSES";
                     break;
-
-
                 default:
 
                     break;
             }
 
-
-            return view('partials.pagination_data', compact('passedGuides'))->render();
+            return view('partials.pagination_data', ['passedGuides' => $passedGuides, 'container' => $type, 'title' => $title])->render();
         }
     }
     /**
@@ -95,7 +102,6 @@ class GuideController extends Controller
 
         $image = $request->image->store('guides');
 
-
         $guide = Guide::create([
             'title' => $request->title,
             'content' =>  $content,
@@ -121,15 +127,10 @@ class GuideController extends Controller
     public function show(Guide $guide)
     {
 
-        $recent = Recent::where('user_id', auth()->user()->id)
-            ->where('recentable_id', $guide->id)
-            ->where('recentable_type', 'App\Guide')
-            ->first();
-        $recent->touch();
+        $guide->recent()->touch();
 
         return view('guide.show', [
-            'guide' => $guide,
-            'recent' => $recent
+            'guide' => $guide
         ]);
     }
 
@@ -182,6 +183,8 @@ class GuideController extends Controller
     public function destroy($id)
     {
         //
+
+
     }
 
     private function generateContent($input)
@@ -222,11 +225,10 @@ class GuideController extends Controller
 
         $guide->author->notify(new NewEnrolment($guide));
 
-        Recent::create([
-            'recentable_id' => $guide->id,
-            'recentable_type' => 'App\Guide',
-            'user_id' => auth()->user()->id
-        ]);
+        $recent = new Recent(['user_id' => auth()->user()->id]);
+
+        $guide->recent()->save($recent);
+
         return redirect(route('member.dashboard'));
     }
 

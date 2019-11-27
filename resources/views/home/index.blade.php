@@ -14,7 +14,8 @@ Naucma - Jediny Slovensky Portal
         </div>
     </div>
     @endauth
-    @include('partials.recently_added')
+    @include('partials.pagination_data',['passedGuides' => $guides, 'container' => 'recents','title' => 'Recently added
+    guides & courses'])
 </div>
 <div class="container-fluid questions">
     <div class="row mt-5">
@@ -44,7 +45,7 @@ Naucma - Jediny Slovensky Portal
          $(document).on('click', '.pagination a', function(event){
           event.preventDefault(); 
           var page = $(this).attr('href').split('page=')[1];
-          var container = ($(this).parents()[4].id);
+          var container = ($(this).parents()[6].id);
           fetch_data(page,container);
 
          });

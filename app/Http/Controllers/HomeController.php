@@ -31,10 +31,8 @@ class HomeController extends Controller
                 'guides' => Guide::searched()
             ]);
         } else {
-            $recentViewed = Guide::whereIn(
-                'id',
-                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(2)->get()
-            )->simplePaginate(2);
+
+            $recentViewed = auth()->user()->recentGuides();
 
             return view('home.index', [
                 'guides' => Guide::searched(),

@@ -84,10 +84,10 @@
                                 Teacher's zone
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('teacher.dashboard-general') }}">My Teacher
+                                <a class="dropdown-item" href="{{ route('teacher.dashboard') }}">My Teacher
                                     Dashboard</a>
                                 <a class="dropdown-item" href="{{ route('guide.create') }}">Create guide</a>
-                                <a class="dropdown-item disabled" href="#">Create Course</a>
+                                <a class="dropdown-item" href="{{ route('course.create') }}">Create Course</a>
                                 <a class="dropdown-item disabled" href="#">Courses</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">My teacher profile</a>
