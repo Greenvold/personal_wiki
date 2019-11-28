@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Episode;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Recent;
 use App\Tag;
@@ -68,10 +69,10 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Course $course, Episode $episode)
     {
         //
-        return view('course.show', ['course' => $course]);
+        return view('course.show', ['course' => $course, 'episodes' => $course->episodes, 'episode' => $episode]);
     }
 
     /**

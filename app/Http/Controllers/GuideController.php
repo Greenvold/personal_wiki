@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Asset;
 use App\Course;
 use App\Guide;
 use App\Http\Requests\Guide\CreateGuideRequest;
@@ -20,64 +21,8 @@ class GuideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { }
 
-        if (!auth()->user()) {
-            return view('guide.index', [
-                'guides' => Guide::searched(),
-                'webGuides' => Guide::web()->union(Course::web())->simplePaginate(6),
-                'officeGuides' => Guide::office()->union(Course::office())->simplePaginate(6)
-            ]);
-        } else {
-            $recentViewedGuides = Guide::whereIn(
-                'id',
-                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(1)->get()
-            )->get();
-
-            $recentViewedCourses = Course::whereIn(
-                'id',
-                Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Course')->orderBy('updated_at', 'desc')->take(1)->get()
-            )->get();
-            $merged = $recentViewedCourses->merge($recentViewedGuides);
-
-            return view('guide.index', [
-                'guides' => Guide::searched(),
-                'webGuides' => Guide::web()->union(Course::web())->simplePaginate(6),
-                'officeGuides' => Guide::office()->union(Course::office())->simplePaginate(6),
-                'recents' => $merged
-            ]);
-        }
-    }
-
-
-    function fetch_data(Request $request)
-    {
-
-        if ($request->ajax()) {
-
-            $type = $_GET['type'];
-
-            switch ($type) {
-                case 'recents':
-                    $passedGuides = Guide::with('users')->simplePaginate(4);
-                    $title = "Recently added guides & courses";
-                    break;
-                case 'officeGuides':
-                    $passedGuides = Guide::office();
-                    $title = "MICROSOFT OFFICE GUIDES & COURSES";
-                    break;
-                case 'webGuides':
-                    $passedGuides = Guide::web();
-                    $title = "WEB DEVELOPMENT GUIDES & COURSES";
-                    break;
-                default:
-
-                    break;
-            }
-
-            return view('partials.pagination_data', ['passedGuides' => $passedGuides, 'container' => $type, 'title' => $title])->render();
-        }
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -115,7 +60,7 @@ class GuideController extends Controller
 
         session()->flash('success', 'New text guide created successfully.');
 
-        return redirect(route('guide.index'));
+        return redirect(route('teacher.dashboard'));
     }
 
     /**

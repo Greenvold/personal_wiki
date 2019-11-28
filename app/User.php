@@ -42,7 +42,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function guides()
     {
-        return $this->hasMany(Guide::class, 'id', 'guide_id');
+        return $this->hasMany(Guide::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 
     public function groups()
@@ -63,13 +68,42 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array($group, $this->groups->pluck('title')->toArray());
     }
 
-    public function scopeRecentGuides()
+    public function scopeRecents()
     {
-        $recentViewed = Guide::whereIn(
+        $recentViewedGuides = Guide::whereIn(
             'id',
-            Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(2)->get()
-        )->simplePaginate(2);
-        //return $this->morphToMany('App\Guide', 'recentable', 'recents', 'user_id', 'recentable_id', 'id', 'recentable_id');
-        return $recentViewed;
+            Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Guide')->orderBy('updated_at', 'desc')->take(1)->get()
+        )->get();
+
+        $recentViewedCourses = Course::whereIn(
+            'id',
+            Recent::select('recentable_id')->where('user_id', auth()->user()->id)->where('recentable_type', 'App\Course')->orderBy('updated_at', 'desc')->take(1)->get()
+        )->get();
+
+        return $recentViewedCourses->merge($recentViewedGuides);
+    }
+
+    public function scopeMyAssets($query)
+    {
+        $search = request()->query('search');
+
+        if ($search) {
+
+            $guides = auth()->user()->guides()->where('title', 'LIKE', "%{$search}%")->orWhereHas('tags', function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%");
+            });
+
+            $courses = auth()->user()->courses()->where('title', 'LIKE', "%{$search}%")->orWhereHas('tags', function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%");
+            });
+
+            return $courses->union($guides)->simplePaginate(6);
+        } else {
+            $guides =  auth()->user()->guides();
+
+            $courses =   auth()->user()->courses();
+
+            return $guides->union($courses)->simplePaginate(6);
+        }
     }
 }

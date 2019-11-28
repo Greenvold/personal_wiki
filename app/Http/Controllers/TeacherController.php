@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Guide;
+use App\Teacher;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -12,14 +13,14 @@ class TeacherController extends Controller
     public function guides()
     {
         return view('teacher.guides', [
-            'guides' => Guide::teacherGuides(),
+            'guides' => Teacher::guides()->simplePaginate(6)
         ]);
     }
 
     public function courses()
     {
         return view('teacher.courses', [
-            'courses' => Course::teacherCourses()
+            'courses' => Teacher::courses()->simplePaginate(6)
         ]);
     }
 
@@ -27,10 +28,8 @@ class TeacherController extends Controller
     {
         if (isset($_GET['search'])) {
 
-            $merged = Course::teacherCoursesNoPaginate()->union(Guide::teacherGuidesNoPaginate())->simplePaginate(6);
-            // dd($merged);
             return view('teacher.search_results', [
-                'assets' => $merged
+                'assets' => Teacher::assets()
             ]);
         } else {
             return view('teacher.dashboard');

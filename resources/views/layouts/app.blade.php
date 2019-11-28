@@ -46,7 +46,7 @@
                         </li>
                         {{-- Guide & Courses --}}
                         <li class="nav-item ">
-                            <a href="{{ route('guide.index') }}" class="nav-link">Guides & Courses</a>
+                            <a href="{{ route('asset.index') }}" class="nav-link">Guides & Courses</a>
                         </li>
                         <li class="nav-item"><a href="{{route('home.faq')}}"
                                 class="nav-link disabled {{Request::is('faq') ? 'active' : ''}}">FAQ</a></li>
@@ -88,7 +88,6 @@
                                     Dashboard</a>
                                 <a class="dropdown-item" href="{{ route('guide.create') }}">Create guide</a>
                                 <a class="dropdown-item" href="{{ route('course.create') }}">Create Course</a>
-                                <a class="dropdown-item disabled" href="#">Courses</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">My teacher profile</a>
                             </div>

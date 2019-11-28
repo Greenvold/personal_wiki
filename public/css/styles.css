@@ -22,7 +22,7 @@ body {
     );
 }
 
-.guide {
+.asset {
     text-decoration: none !important;
     color: inherit;
     min-height: 340px;
@@ -42,7 +42,7 @@ body {
     color: inherit;
 }
 
-.guide:hover {
+.asset:hover {
     color: inherit;
 }
 

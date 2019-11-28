@@ -14,7 +14,7 @@ Naucma - Jediny Slovensky Portal
         </div>
     </div>
     @endauth
-    @include('partials.pagination_data',['passedGuides' => $guides, 'container' => 'recents','title' => 'Recently added
+    @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Recently added
     guides & courses'])
 </div>
 <div class="container-fluid questions">
@@ -29,7 +29,7 @@ Naucma - Jediny Slovensky Portal
 
         <div class="col-md-8 offset-md-2 text-right mt-5">
             <h4>Would you like to have private NaucMa for your company?</h4>
-            <p>If you would like to have private portal where your employees can publish internal guides and
+            <p>If you would like to have private portal where your employees can publish internal guides, courses and
                 documents
                 use the link bellow.</p>
             <a href="#" class="button-white">Click here</a>
@@ -37,34 +37,6 @@ Naucma - Jediny Slovensky Portal
     </div>
 </div>
 @endsection
-
 @section('scripts')
-<script>
-    $(document).ready(function(){
-
-         $(document).on('click', '.pagination a', function(event){
-          event.preventDefault(); 
-          var page = $(this).attr('href').split('page=')[1];
-          var container = ($(this).parents()[6].id);
-          fetch_data(page,container);
-
-         });
-
-         function fetch_data(page,container)
-         {
-          $.ajax({
-           url:"/home/fetch_data/?page="+page,
-           type:"Get",
-           method:"get",
-           data: {type : container},
-           success:function(data)
-           {
-
-            $('#'+ container).html(data);
-           }
-          });
-         }
-
-        });
-</script>
+<script src="{{ asset('js/pagination_ajax.js') }}"></script>
 @endsection

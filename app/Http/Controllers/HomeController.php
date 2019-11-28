@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Guide;
-use App\Recent;
+use App\User;
+use App\Asset;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -28,15 +28,12 @@ class HomeController extends Controller
     {
         if (!auth()->user()) {
             return view('home.index', [
-                'guides' => Guide::searched()
+                'assets' => Asset::searched()
             ]);
         } else {
-
-            $recentViewed = auth()->user()->recentGuides();
-
             return view('home.index', [
-                'guides' => Guide::searched(),
-                'recents' => $recentViewed
+                'assets' => Asset::searched(),
+                'recents' => User::recents()
             ]);
         }
     }

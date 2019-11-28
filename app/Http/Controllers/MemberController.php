@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
-use App\Guide;
 
 class MemberController extends Controller
 {
@@ -13,10 +13,11 @@ class MemberController extends Controller
     }
     public function dashboard()
     {
+
         return view(
             'member.dashboard',
             [
-                'guides' => Guide::myGuidesSearched()
+                'assets' => User::myAssets()
             ]
         );
     }
@@ -26,7 +27,7 @@ class MemberController extends Controller
         return view(
             'member.dashboard_tabular',
             [
-                'guides' => Guide::myGuidesSearched()
+                'assets' => User::myAssets()
             ]
         );
     }

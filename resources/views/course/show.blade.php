@@ -9,8 +9,9 @@
         <div class="col-lg-9">
             <video id="my-video" class="video-js vjs-waiting" controls preload="auto" width="640" height="264"
                 poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                <source src="{{ route('video','shaman.mp4') }}" type="video/mp4" />
+                <source src="{{ route('video',$episode->video) }}" type="video/mp4" />
                 <p class="vjs-no-js">
+
                     To view this video please enable JavaScript, and consider upgrading to a
                     web browser that
                     <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -19,15 +20,15 @@
         </div>
         <div class="col-lg-3">
             <ul class="list-group">
-                <li class="list-group-item">Episode 1</li>
-                <li class="list-group-item">Episode 2</li>
-                <li class="list-group-item">Episode 3</li>
-                <li class="list-group-item">Episode 4</li>
-                <li class="list-group-item">Episode 5</li>
+                @foreach ($episodes as $episode)
+                <li class="list-group-item">{{$episode->title}}</li>
+                @endforeach
+
             </ul>
         </div>
         <div class="col-lg-12">
             About episode and course
+            {{$episode->video}}
         </div>
     </div>
 </div>

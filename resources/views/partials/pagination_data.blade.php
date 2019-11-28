@@ -1,19 +1,17 @@
 <div id="{{$container}}">
     <div class="row">
-
         <div class="col-md-12 mt-4">
             <h4 class="content-heading">{{$title}}</h4>
             <hr class="shadow">
-
             <div class="row animated fadeIn">
-                @foreach ($passedGuides as $asset)
+                @foreach ($passedAssets as $asset)
                 <div class="col-lg-3 mb-3 col-md-3">
                     <a href="
                     @if ($asset->type == 'guide')
                     {{ route('guide.preview', $asset->slug) }}
                     @else
                     {{ route('course.preview', $asset->slug) }}
-                    @endif" class="card guide shadow scale">
+                    @endif" class="card asset shadow scale">
                         @php
                         if(rand(0,1) == 1)
                         {
@@ -33,7 +31,7 @@
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-3">
-                {!! $passedGuides->links() !!}
+                {!! $passedAssets->links() !!}
             </div>
         </div>
     </div>

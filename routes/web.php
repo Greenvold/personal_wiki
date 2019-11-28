@@ -19,7 +19,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home/fetch_data', 'GuideController@fetch_data');
+Route::get('/home/fetch_data', 'AssetController@fetch_data');
 
 Route::get('/get-started', 'HomeController@getStarted')->name('home.get-started');
 
@@ -34,7 +34,7 @@ Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.pre
 
 Route::get('/course/{course}/preview', 'CourseController@preview')->name('course.preview');
 
-
+Route::get('/guides-and-courses', 'AssetController@index')->name('asset.index');
 //Member zone
 
 Route::middleware(['auth'])->group(function () {
@@ -73,4 +73,12 @@ Route::middleware(['isTeacher', 'auth'])->group(function () {
 
 
     Route::resource('/course', 'CourseController');
+
+    Route::resource('/episode', 'EpisodeController');
+
+    Route::get('/course/{course}/episode/{episode}', 'CourseController@show')->name('course.show');
+
+    Route::get('/course/{course}/create-episode', 'EpisodeController@create')->name('episode.create');
+
+    Route::post('/course/{course}/store-episode', 'EpisodeController@store')->name('episode.store');
 });

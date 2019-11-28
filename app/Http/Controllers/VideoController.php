@@ -13,7 +13,8 @@ class VideoController extends Controller
     public function getVideo($fileName)
     {
 
-        $video = Storage::disk('local')->get($fileName);
+
+        $video = Storage::disk('local')->get('videos/' . $fileName);
 
         $response = Response::make($video, 200);
         $response->header('Content-Type', 'video/mp4');

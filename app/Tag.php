@@ -30,4 +30,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(Guide::class);
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
 }
