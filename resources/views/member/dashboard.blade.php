@@ -13,7 +13,11 @@ and courses.'])
             <div class="row">
                 @foreach ($assets as $asset)
                 <div class="col-lg-4 mb-3">
-                    <a href="{{ route('guide.show', $asset->slug) }}" class="card asset scale">
+                    <a href="@if ($asset->type == 'guide')
+                        {{ route('guide.show', $asset->slug) }}
+                    @else
+                        {{ route('course.show', [$asset->slug, auth()->user()->lastViewedEpisode($asset->id)->slug]) }}
+                    @endif" class=" card asset scale">
                         <img src="{{ asset('storage/' . $asset->image) }}" class="card-img-top" alt="...">
                         <div class="card-body card-body-sm">
                             <h5 class="card-title-lg">{{$asset->title}}</h5>

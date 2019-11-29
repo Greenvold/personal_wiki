@@ -1,5 +1,6 @@
 <?php
 
+use App\Course;
 use App\Guide;
 use Illuminate\Database\Seeder;
 
@@ -154,5 +155,16 @@ class GuidesTableSeeder extends Seeder
 
         $guide8->tags()->attach($tag7);
         $guide8->tags()->attach($tag6);
+
+        $course1 = Course::create([
+            'title' => 'Bootstrap course',
+            'short_description' => 'How to use bootstrap',
+            'content' => $faker->realText(2500),
+            'published_at' => date('d/m/Y', strtotime($faker->date())),
+            'image' => 'guides/word.jpg',
+            'user_id' => '1'
+        ]);
+
+        $course1->tags()->attach($tag2);
     }
 }

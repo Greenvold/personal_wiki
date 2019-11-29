@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return redirect(route('home'));
 });
@@ -35,6 +36,8 @@ Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.pre
 Route::get('/course/{course}/preview', 'CourseController@preview')->name('course.preview');
 
 Route::get('/guides-and-courses', 'AssetController@index')->name('asset.index');
+
+Route::get('/error/no-access', 'ErrorController@unauthorized')->name('error.no_access');
 //Member zone
 
 Route::middleware(['auth'])->group(function () {
@@ -56,6 +59,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
 
     Route::get('/video/{fileName}', 'VideoController@getVideo')->name('video');
+
+    Route::get('/course/{course}/contiue-course/{episode}', 'CourseController@continue')->name('course.continue');
+
+    Route::get('/course/{course}/overview', 'CourseController@overview')->name('course.overview');
+
+    Route::get('/course/{course}/start-course', 'CourseController@startCourse')->name('course.start');
+
+
+    Route::resource('/course', 'CourseController');
+
+    Route::get('/course/{course}/episode/{episode}', 'CourseController@show')->name('course.show');
+
+    Route::resource('/episode', 'EpisodeController');
 });
 
 
@@ -72,11 +88,9 @@ Route::middleware(['isTeacher', 'auth'])->group(function () {
     Route::get('teacher/dashboard', 'TeacherController@dashboard')->name('teacher.dashboard');
 
 
-    Route::resource('/course', 'CourseController');
 
-    Route::resource('/episode', 'EpisodeController');
 
-    Route::get('/course/{course}/episode/{episode}', 'CourseController@show')->name('course.show');
+
 
     Route::get('/course/{course}/create-episode', 'EpisodeController@create')->name('episode.create');
 

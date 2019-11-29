@@ -87,10 +87,14 @@ class GuideController extends Controller
      */
     public function edit(Guide $guide)
     {
-        return view('guide.create', [
-            'guide' => $guide,
-            'tags' => Tag::all()
-        ]);
+        if ($guide->author->id == auth()->user()->id) {
+            return view('guide.create', [
+                'guide' => $guide,
+                'tags' => Tag::all()
+            ]);
+        } else {
+            return redirect(route('error.no_access'));
+        }
     }
 
     /**
@@ -102,21 +106,25 @@ class GuideController extends Controller
      */
     public function update(UpdateGuideRequest $request, Guide $guide)
     {
-        $data = $request->only(['title', 'content', 'publishet_at', 'slug']);
+        if ($guide->author->id == auth()->user()->id) {
+            $data = $request->only(['title', 'content', 'publishet_at', 'slug']);
 
-        $guide->slug = null;
-        $guide->update($data, ['title' => $data['title']]);
+            $guide->slug = null;
+            $guide->update($data, ['title' => $data['title']]);
 
-        if ($request->tags) {
+            if ($request->tags) {
 
-            $guide->tags()->sync($request->tags);
+                $guide->tags()->sync($request->tags);
+            } else {
+                $guide->tags()->detach();
+            }
+
+            session()->flash('success', 'Guide has been updated successfully.');
+
+            return redirect(route('guide.index'));
         } else {
-            $guide->tags()->detach();
+            return redirect(route('error.no_access'));
         }
-
-        session()->flash('success', 'Guide has been updated successfully.');
-
-        return redirect(route('guide.index'));
     }
 
     /**
@@ -125,11 +133,10 @@ class GuideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Guide $guide)
     {
         //
-
-
+        if ($guide->author->id == auth()->user()->id) { } else { }
     }
 
     private function generateContent($input)

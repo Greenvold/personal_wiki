@@ -14,7 +14,7 @@ class Course extends Model
     use SoftDeletes;
     use Sluggable;
     //
-    protected $fillable = ['title', 'content', 'published_at', 'image', 'user_id', 'short_description'];
+    protected $fillable = ['title', 'content', 'published_at', 'image', 'user_id', 'short_description', 'user_id', 'episode_id', 'course_id'];
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -89,6 +89,6 @@ class Course extends Model
 
     public function episodes()
     {
-        return $this->hasMany(Episode::class);
+        return $this->belongsToMany(Episode::class);
     }
 }

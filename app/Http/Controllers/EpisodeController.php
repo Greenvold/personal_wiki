@@ -42,17 +42,21 @@ class EpisodeController extends Controller
     public function store(EpisodeCreateEpisodeRequest $request, Course $course)
     {
         //
-        $path = Storage::disk('local')->putFile('videos', $request->file('video'));
+        Storage::disk('local')->putFile('videos', $request->file('video'));
+
+
 
         $episode = Episode::create(
             [
                 'title' => $request->title,
                 'short_description' => $request->short_description,
                 'course_id' => $course->id,
-                'video' => $path,
+                'video' => $request->video->hashName(),
                 'order_number' => '1'
             ]
         );
+
+        $course->episodes()->attach($episode);
 
         return redirect(route('course.show', $course));
     }

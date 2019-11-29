@@ -8,6 +8,7 @@ use App\Http\Requests\Course\CreateCourseRequest;
 use App\Recent;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -71,8 +72,26 @@ class CourseController extends Controller
      */
     public function show(Course $course, Episode $episode)
     {
+
+        auth()->user()->coursesViewed()->sync([1 => ['episode_id' => $episode->id]], $course->id);
         //
-        return view('course.show', ['course' => $course, 'episodes' => $course->episodes, 'episode' => $episode]);
+        return view('course.show', ['course' => $course, 'episodes' => $course->episodes, 'thisEpisode' => $episode]);
+    }
+
+    public function continue(Course $course)
+    {
+        $lastEpisode = auth()->user()->lastViewedEpisode($course->id);
+
+        auth()->user()->coursesViewed()->sync([1 => ['episode_id' => $lastEpisode->id]], $course->id);
+
+        return view('course.show', ['course' => $course, 'episodes' => $course->episodes, 'thisEpisode' => $lastEpisode]);
+    }
+
+    public function overview(Course $course)
+    {
+        $lastEpisode = auth()->user()->lastViewedEpisode($course->id);
+
+        return view('course.overview', ['course' => $course, 'lastEpisode' => $lastEpisode]);
     }
 
     /**
@@ -146,7 +165,11 @@ class CourseController extends Controller
     {
         $course->users()->attach(auth()->user()->id);
 
-        //$course->author->notify(new NewEnrolment($course));
+        $firstEpisode = DB::table('course_episode')->where('course_id', $course->id)->min('episode_id');
+
+
+        auth()->user()->coursesViewed()->sync([1 => ['episode_id' => $firstEpisode]], $course->id);
+
 
         $recent = new Recent(['user_id' => auth()->user()->id]);
 
@@ -165,12 +188,27 @@ class CourseController extends Controller
             $enrolled = $course->users()->where('user_id', auth()->user()->id)->exists();
 
             if ($enrolled) {
-                return redirect(route('course.show', $course->slug));
+                $lastEpisode = auth()->user()->lastViewedEpisode($course->id);
+
+                return view('course.overview', ['course' => $course, 'lastEpisode' => $lastEpisode]);
             } else {
                 return view('course.preview', [
                     'course' => $course
                 ]);
             }
         }
+    }
+
+    public function startCourse(Course $course)
+    {
+
+        $firstEpisode = DB::table('course_episode')->where('course_id', $course->id)->min('episode_id');
+
+
+        auth()->user()->coursesViewed()->sync([1 => ['episode_id' => $firstEpisode]], $course->id);
+
+        $episode = $course->episodes()->where('order_number', '1')->first();
+
+        return redirect(route('course.show', ['course' => $course, 'episodes' => $course->episodes, 'episode' => $episode->slug]));
     }
 }

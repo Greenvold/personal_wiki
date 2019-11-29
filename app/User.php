@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Guide;
 use App\Group;
+use App\DB;
+use Illuminate\Support\Facades\DB as IlluminateDB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -105,5 +107,21 @@ class User extends Authenticatable implements MustVerifyEmail
 
             return $guides->union($courses)->simplePaginate(6);
         }
+    }
+
+    public function coursesViewed()
+    {
+        return $this->belongsToMany(Course::class, 'course_episode_user');
+    }
+
+    public function episode()
+    {
+        return $this->belongsToMany(Episode::class, 'course_episode_user');
+    }
+    public function lastViewedEpisode($courseId)
+    {
+        $lastEpisodeId = IlluminateDB::table('course_episode_user')->select('episode_id')->where('course_id', $courseId)->where('user_id', auth()->user()->id)->first()->episode_id;
+
+        return Episode::where('id', $lastEpisodeId)->first();
     }
 }

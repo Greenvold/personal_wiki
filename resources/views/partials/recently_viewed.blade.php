@@ -9,7 +9,7 @@
         @if ($recent->type == 'guide')
             {{ route('guide.preview', $recent->slug) }}
         @else
-            {{ route('course.preview', $recent->slug) }}
+            {{ route('course.show', [$recent->slug, auth()->user()->lastViewedEpisode($recent->id)->slug]) }}
         @endif
         " class="card mb-3 scale">
             <div class="row no-gutters recent ">
@@ -30,7 +30,7 @@
                         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
                             additional content. This content is a little bit longer.</p>
                         <p class="card-text"><small class="text-muted">Last viewed at
-                                {{$recent->updated_at}}</small></p>
+                                {{$recent->updated_at}} </small></p>
                     </div>
                 </div>
             </div>
