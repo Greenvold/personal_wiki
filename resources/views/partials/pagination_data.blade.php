@@ -4,7 +4,7 @@
             <h4 class="content-heading">{{$title}}</h4>
             <hr class="shadow">
             <div class="row animated fadeIn">
-                @foreach ($passedAssets as $asset)
+                @forelse ($passedAssets as $asset)
                 <div class="col-lg-3 mb-3 col-md-3">
                     <a href="
                     @if ($asset->type == 'guide')
@@ -28,7 +28,11 @@
                         </div>
                     </a>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-lg-12 text-center">
+                    <h4>Unfortunately there are no courses or guides for your search right now.</h4>
+                </div>
+                @endforelse
             </div>
             <div class="d-flex justify-content-center mt-3">
                 {!! $passedAssets->links() !!}

@@ -89,6 +89,6 @@ class Course extends Model
 
     public function episodes()
     {
-        return $this->belongsToMany(Episode::class);
+        return $this->belongsToMany(Episode::class)->orderBy('order_number', 'asc');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Course;
+use App\Episode;
 use App\Guide;
 use Illuminate\Database\Seeder;
 
@@ -166,5 +167,44 @@ class GuidesTableSeeder extends Seeder
         ]);
 
         $course1->tags()->attach($tag2);
+
+        $episode1 = Episode::create([
+            'title' => 'What is Bootstrap 4 framework?',
+            'short_description' => 'In this lesson I am going to show you what is Bootstrap 4 and what does word framework mean.',
+            'course_id' => '1',
+            'order_number' => '1',
+            'video' => 'episode1.mp4'
+        ]);
+
+        $episode2 = Episode::create([
+            'title' => 'How to setup our IDE',
+            'short_description' => 'In this lesson I am going to show you how to setup your IDE, what IDE actually is and how to make it look as good as possible.',
+            'course_id' => '1',
+            'order_number' => '2',
+            'video' => 'episode2.mp4'
+        ]);
+
+        $episode3 = Episode::create([
+            'title' => 'Hello world!',
+            'short_description' => 'In this lesson we are goin to create our veyr first website using bootstrap. As you can say from the episode title Hello world!',
+            'course_id' => '1',
+            'order_number' => '3',
+            'video' => 'episode3.mp4'
+        ]);
+
+
+        $episode4 = Episode::create([
+            'title' => 'What is container? What is bootstrap grid?',
+            'short_description' => 'In this lesson I am going to show you how does the basic bootstrap grid system work.',
+            'course_id' => '1',
+            'order_number' => '4',
+            'video' => 'episode4.mp4'
+        ]);
+
+
+        $course1->episodes()->attach($episode1);
+        $course1->episodes()->attach($episode2);
+        $course1->episodes()->attach($episode3);
+        $course1->episodes()->attach($episode4);
     }
 }

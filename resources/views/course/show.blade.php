@@ -68,12 +68,17 @@
         </div>
         <div class="col-lg-3 ">
             <ul class="list-group">
-                @foreach ($episodes as $episode)
+
+                @foreach ($episodes as $key=>$episode)
+
                 <a href="{{ route('course.show', [$course->slug, $episode->slug]) }}" class="list-group-item list-group-item-action 
                     @if ($episode->slug ==  $thisEpisode->slug )
                     active
                     @endif
-                    "><strong>{{$episode->title}}</strong></a>
+                    ">
+                    <small>Episode {{$key+1}} </small>
+                    <br>
+                    <strong>{{$episode->title}}</strong></a>
                 @endforeach
 
             </ul>

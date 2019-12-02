@@ -17,8 +17,7 @@ learn today?'])
 
     {{-- Search results or Recently added --}}
     @if (!Request::get('search'))
-    @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Recently
-    added
+    @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Recently added
     guides & courses'])
     @else
     @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Search

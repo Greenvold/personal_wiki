@@ -14,35 +14,35 @@
                             <i class="fa fa-laptop"></i>
                             IT
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'personal+skills']) }}">
                             <i class="fa fa-user-circle"></i>
                             Personal Skills
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'MS Excel']) }}">
                             <i class="fa fa-file-excel-o"></i>
                             Microsoft Excel
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'MS Word']) }}">
                             <i class="fa fa-file-word-o"></i>
                             Microsoft Word
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'Databases']) }}">
                             <i class="fa fa-database"></i>
                             Databases
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'Windows']) }}">
                             <i class="fa fa-windows"></i>
                             Windows 10
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'Web']) }}">
                             <i class="fa fa-html5"></i>
                             Web deveopment
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'general']) }}">
                             <i class="fa fa-globe"></i>
                             General
                         </a>
-                        <a class="navbar-brand white" href="#">
+                        <a class="navbar-brand white" href="{{ route('asset.index', ['search'=>'career']) }}">
                             <i class="fa fa-linkedin-square"></i>
                             Jobs
                         </a>
