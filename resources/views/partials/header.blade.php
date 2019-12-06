@@ -22,7 +22,7 @@
 
 <style>
     .header-v2 {
-        height: 35vh;
+        min-height: 35vh;
         background-image: linear-gradient(48deg, rgba(90, 90, 232, 1) 19%, rgba(103, 161, 197, 1) 100%);
         font-family: 'Montserrat', sans-serif;
     }

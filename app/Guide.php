@@ -88,4 +88,9 @@ class Guide extends Model
     {
         return $this->morphOne('App\Recent', 'recentable');
     }
+
+    public function questions()
+    {
+        return $this->morphMany(Question::class, 'questionable');
+    }
 }

@@ -80,6 +80,7 @@ class CourseController extends Controller
 
     public function continue(Course $course)
     {
+        dd($course);
         $lastEpisode = auth()->user()->lastViewedEpisode($course->id);
 
         auth()->user()->coursesViewed()->sync([1 => ['episode_id' => $lastEpisode->id]], $course->id);
@@ -174,6 +175,8 @@ class CourseController extends Controller
         $recent = new Recent(['user_id' => auth()->user()->id]);
 
         $course->recent()->save($recent);
+
+        session()->flash('success', 'You have successfully enroled to this course!');
 
         return redirect(route('member.dashboard'));
     }

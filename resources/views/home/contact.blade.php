@@ -3,8 +3,8 @@
 Naucma - Contact
 @endsection
 @section('content')
-<div class="container animated fadeIn">
-    <div class="row mt-5">
+<div class="container animated fadeIn mt-5">
+    <div class="row">
         <div class="col-md-10 offset-md-1">
             <div class="card">
                 <div class="card-header">
@@ -12,6 +12,7 @@ Naucma - Contact
                 </div>
                 <div class="card-body">
                     <form action="{{ route('contact.send') }}" method="POST">
+                        @csrf
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label for="title">Your email address</label>
@@ -26,14 +27,22 @@ Naucma - Contact
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="subject">Subject</label>
-                                <input type="text" class="form-control" name="subject" id="subject">
+                                <label for="category">Category</label>
+                                <select name="category" id="category" class="form-control">
+                                    <option disabled selected value>Select an option</option>
+                                    <option value="Guides">Guides</option>
+                                    <option value="Courses">Courses</option>
+                                    <option value="Account">My Account</option>
+                                    <option value="Teahcer role">Teacher role</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <textarea name="message" id="message" cols="30" rows="4"
-                                    class="form-control"></textarea>
+                                <label for="message">Message</label>
+                                <textarea name="message" id="message" cols="30" rows="4" class="form-control"
+                                    placeholder="Please insert your message here..."></textarea>
                             </div>
                         </div>
                         <div class="form-group row">

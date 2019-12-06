@@ -11,10 +11,6 @@
 |
 */
 
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
-
 Route::get('/', function () {
     return redirect(route('home'));
 });
@@ -31,7 +27,7 @@ Route::get('/faq', 'HomeController@faq')->name('home.faq');
 
 Route::get('/contact', 'HomeController@contact')->name('home.contact');
 
-Route::get('/contact/send', 'ContactController@send')->name('contact.send');
+Route::post('/contact/send', 'ContactController@send')->name('contact.send');
 
 
 Route::get('/guide/{guide}/preview', 'GuideController@preview')->name('guide.preview');
@@ -75,6 +71,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/course/{course}/episode/{episode}', 'CourseController@show')->name('course.show');
 
     Route::resource('/episode', 'EpisodeController');
+
+    Route::resource('/question', 'QuestionController');
+
+    Route::post('/question/{questionable_type}/{questionable_id}/store', 'QuestionController@store')->name('question.store');
 });
 
 

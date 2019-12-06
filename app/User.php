@@ -44,12 +44,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function guides()
     {
-        return $this->hasMany(Guide::class);
+        return $this->belongsToMany(Guide::class);
     }
 
     public function courses()
     {
-        return $this->hasMany(Course::class);
+        return $this->belongsToMany(Course::class);
     }
 
     public function groups()

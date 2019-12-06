@@ -258,3 +258,32 @@ body {
     height: 6.5vh;
     background-color: grey;
 }
+
+.votes {
+    font-size: 150%;
+    text-align: center;
+}
+
+.votes__number {
+}
+
+.votes__arrow {
+    color: rgb(147, 151, 158);
+    transition: all 0.2s;
+}
+
+.votes__arrow-up:hover {
+    transform: translateY(-3px);
+    cursor: pointer;
+    color: inherit;
+}
+
+.votes__arrow-down:hover {
+    transform: translateY(3px);
+    cursor: pointer;
+    color: inherit;
+}
+
+.question {
+    min-height: 118px;
+}

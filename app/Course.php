@@ -91,4 +91,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Episode::class)->orderBy('order_number', 'asc');
     }
+
+    public function questions()
+    {
+        return $this->morphToMany(Question::class, 'questionable');
+    }
 }

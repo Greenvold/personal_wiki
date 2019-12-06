@@ -16,11 +16,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
     @yield('styles')
 </head>
 
@@ -117,38 +118,52 @@
             </div>
         </nav>
 
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
         <main class="">
-            <div class="container p-0 m-0">
+            @if (session()->has('success') || session()->has('errors'))
+            <div class="container mt-3">
                 <div class="row">
                     <div class="col-md-12">
                         @if (session()->has('success'))
-                        <div class="alert alert-success">
-                            {{session()->get('success')}}
-                        </div>
+                        <script>
+                            $.notify({
+                                // options
+                                message: '{{session()->get('success')}}' ,
+                                icon: 'fa fa-check'
+                            },{
+                                // settings
+                                type: 'success'
+                            });
+                        </script>
                         @endif
                         @if ($errors->any())
-                        <div class="alert alert-danger ">
-                            <ul class="list-group">
-                                @foreach ($errors->all() as $error)
-                                <li class="list-group-item text-danger">
-                                    {{$error}}
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        @foreach ($errors->all() as $error)
+                        <script>
+                            $.notify({
+                                // options
+                                message: '{{$error}}' ,
+                                icon: 'fa fa-exclamation-circle'
+                            },{
+                                // settings
+                                type: 'danger'
+                            });
+                        </script>
+                        @endforeach
                         @endif
 
 
                     </div>
                 </div>
             </div>
+            @endif
+
             @yield('content')
         </main>
     </div>
     <!-- Scripts -->
 
 
-    <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript">
         $.ajaxSetup({
     headers: {
@@ -157,7 +172,6 @@
 });
     </script>
     @yield('scripts')
-
 </body>
 
 </html>

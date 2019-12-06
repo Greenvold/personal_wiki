@@ -8,7 +8,7 @@ and courses.'])
 <div class="container">
     <div class="row">
         <div class="col-lg-9">
-            <h4 class="content-heading">Enrolled guides</h4>
+            <h4 class="content-heading">Enrolled assets</h4>
             <hr>
             <div class="row">
                 @foreach ($assets as $asset)
@@ -29,20 +29,11 @@ and courses.'])
                 @endforeach
             </div>
             <div class="d-flex justify-content-center mt-3">
-                {!! $assets->links() !!}
+
             </div>
         </div>
         <div class="col-lg-3">
-            <form action="" method="GET" class="mb-3">
-                <input type="text" class="form-control" placeholder="Search..." name="search" id="search">
-
-            </form>
-            <div class="list-group">
-                <a href="{{ route('member.dashboard-tabular') }}" class="list-group-item list-group-item-action">Tabular
-                    view</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">Messages</a>
-                <a href="#" class="list-group-item list-group-item-action">Settings</a>
-            </div>
+            @include('member.partials.sidebar')
         </div>
     </div>
 </div>

@@ -60,7 +60,7 @@ class GuideController extends Controller
 
         session()->flash('success', 'New text guide created successfully.');
 
-        return redirect(route('teacher.dashboard'));
+        return redirect(route('teacher.dashboard-general'));
     }
 
     /**
@@ -74,8 +74,10 @@ class GuideController extends Controller
 
         $guide->recent()->touch();
 
+
         return view('guide.show', [
             'guide' => $guide
+
         ]);
     }
 
@@ -181,7 +183,9 @@ class GuideController extends Controller
 
         $guide->recent()->save($recent);
 
-        return redirect(route('member.dashboard'));
+        session()->flash('success', 'You have successfully enroled to this guide!');
+
+        return redirect(route('guide.show', $guide->slug));
     }
 
     public function preview(Guide $guide)

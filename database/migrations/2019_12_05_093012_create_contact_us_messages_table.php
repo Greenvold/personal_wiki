@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateContactUsMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questionable', function (Blueprint $table) {
+        Schema::create('contact_us_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->text('content');
-            $table->integer('user_id');
-            $table->integer('questionable_id');
-            $table->string('questionable_type');
-            $table->integer('votes')->default(0);
+            $table->string('category');
+            $table->string('user_email');
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questionable');
+        Schema::dropIfExists('contact_us_messages');
     }
 }

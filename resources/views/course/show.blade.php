@@ -21,7 +21,7 @@
                         </p>
                     </video>
                     <div class="row mt-5 mx-1">
-                        <div class="colg-lg-12">
+                        <div class="col-lg-12">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="aboutEpisode-tab" data-toggle="tab"
@@ -58,7 +58,8 @@
                                     <p>{{$course->author->name}}</p>
                                 </div>
                                 <div class="tab-pane fade" id="qanda" role="tabpanel" aria-labelledby="qanda-tab">
-                                    Q&A {{$course->slug}}</div>
+                                    @include('partials.question', ['asset' => $course])
+                                </div>
                             </div>
                         </div>
                     </div>

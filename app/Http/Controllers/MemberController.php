@@ -14,6 +14,7 @@ class MemberController extends Controller
     public function dashboard()
     {
 
+        dd(User::myAssets());
         return view(
             'member.dashboard',
             [

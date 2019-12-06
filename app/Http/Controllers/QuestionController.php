@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Question\NewQuestionRequest;
+use App\Notifications\NewQuestion;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->model = Relation::getMorphedModel(
+            request()->route()->parameter('model')
+        );
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,9 +42,24 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewQuestionRequest $request, $questionable_type, $questionable_id)
     {
         //
+        $data = $request->only('title', 'content');
+
+        $instance = $questionable_type::findOrFail($questionable_id);
+
+        $question = $instance->questions()->create([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'user_id' => auth()->user()->id
+        ]);
+
+        $instance->author->notify(new NewQuestion($question));
+
+        session()->flash('success', 'Your questions was posted successfully!');
+
+        return back();
     }
 
     /**
