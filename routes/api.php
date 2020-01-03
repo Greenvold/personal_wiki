@@ -16,3 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+//Loading initial assets for home and guides & courses page
+Route::get('/assets/office', 'AssetController@officeAssets')->name('assets.office');
+Route::get('/assets/general', 'AssetController@generalAssets')->name('assets.general');
+Route::get('/assets/web', 'AssetController@webDevAssets')->name('assets.webDev');
+Route::get('/assets/front-end', 'AssetController@frontEndAssets')->name('assets.front-end');

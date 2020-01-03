@@ -14,11 +14,11 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questionable', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->string('title');
             $table->text('content');
-            $table->integer('user_id');
-            $table->integer('questionable_id');
+            $table->uuid('user_id');
+            $table->uuid('questionable_id');
             $table->string('questionable_type');
             $table->integer('votes')->default(0);
             $table->timestamps();

@@ -2,12 +2,12 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Guide;
 use App\Group;
-use App\DB;
 use Illuminate\Support\Facades\DB as IlluminateDB;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -42,6 +42,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public $incrementing = false;
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = (string) Str::uuid();
+        });
+    }
     public function guides()
     {
         return $this->belongsToMany(Guide::class);
@@ -123,5 +132,32 @@ class User extends Authenticatable implements MustVerifyEmail
         $lastEpisodeId = IlluminateDB::table('course_episode_user')->select('episode_id')->where('course_id', $courseId)->where('user_id', auth()->user()->id)->first()->episode_id;
 
         return Episode::where('id', $lastEpisodeId)->first();
+    }
+    public function toggleVote($entity, $type)
+    {
+        $vote = $entity->votes->where('user_id', $this->id)->first();
+        if ($vote) {
+            $vote->update([
+                'type' => $type
+            ]);
+
+            return $vote->refresh();
+        } else {
+
+            return $entity->votes()->create([
+                'type' => $type,
+                'user_id' => $this->id
+            ]);
+        }
+    }
+
+    public function enrolled($asset)
+    {
+        return $this->assets()->where('asset_id', $asset->id)->exists();
+    }
+
+    public function assets()
+    {
+        return $this->belongsToMany(Asset::class);
     }
 }

@@ -9,7 +9,7 @@ New guide
             <div class="card animated fadeIn">
                 <div class="card-header">New guide</div>
                 <div class="card-body">
-                    <form action="{{isset($guide) ? route('guide.update',$guide->slug) : route('guide.store')}}"
+                    <form action="{{isset($guide) ? route('asset.update',$guide->slug) : route('asset.store')}}"
                         enctype="multipart/form-data" method="POST">
                         @csrf
                         @isset($guide)

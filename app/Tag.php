@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Guide;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class Tag extends Model

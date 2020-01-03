@@ -14,9 +14,9 @@ class CreateRecentsTable extends Migration
     public function up()
     {
         Schema::create('recents', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('recentable_id');
+            $table->uuid('id');
+            $table->uuid('user_id');
+            $table->uuid('recentable_id');
             $table->string('recentable_type');
             $table->timestamps();
         });

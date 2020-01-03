@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Asset;
 use App\Guide;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,15 +13,15 @@ class NewEnrolment extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $guide;
+    public $asset;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Guide $guide)
+    public function __construct(Asset $asset)
     {
-        $this->guide = $guide;
+        $this->asset = $asset;
     }
 
     /**
@@ -43,7 +44,7 @@ class NewEnrolment extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('You have a new student that enrolled to your' . $this->guide->title . '.')
+            ->line('You have a new student that enrolled to your' . $this->asset->title . '.')
             ->action('View', url('/'))
             ->line('Thank you for using our application!');
     }
@@ -58,7 +59,7 @@ class NewEnrolment extends Notification implements ShouldQueue
     {
         return [
             //
-            'guide' => $this->guide
+            'asset' => $this->asset
         ];
     }
 }

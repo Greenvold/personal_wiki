@@ -29,12 +29,12 @@ class HomeController extends Controller
     {
         if (!auth()->user()) {
             return view('home.index', [
-                'assets' => Asset::searched()
+                // 'assets' => Asset::searched()
+
             ]);
         } else {
             return view('home.index', [
-                'assets' => Asset::searched(),
-                'recents' => User::recents()
+                // 'recents' => User::recents()
             ]);
         }
     }

@@ -13,7 +13,7 @@ Guide preview
                             <strong>Enroll to new guide</strong>
                         </div>
                         <div>
-                            <form action="{{ route('guide.enroll',$guide->slug) }}" method="POST">
+                            <form action="{{ route('asset.enroll',$guide->slug) }}" method="POST">
                                 @csrf
                                 <button class="btn btn-success" type="submit">Enroll</button>
                             </form>

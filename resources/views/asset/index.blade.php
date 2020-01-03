@@ -10,17 +10,17 @@ learn today?'])
     {{-- Checks whether to display search results or recently viewed if logged in --}}
     @auth
     @if (!Request::get('search'))
-    @include('partials.recently_viewed')
+    {{-- @include('partials.recently_viewed') --}}
     @else
     @endif
     @endauth
 
     {{-- Search results or Recently added --}}
     @if (!Request::get('search'))
-    @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Recently added
-    guides & courses'])
+    {{-- @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Recently added --}}
+    {{-- guides & courses']) --}}
     @else
-    @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Search
+    {{-- @include('partials.pagination_data',['passedAssets' => $assets, 'container' => 'recents','title' => 'Search --}}
     results'])
     @endif
 
@@ -30,12 +30,16 @@ learn today?'])
     </div>
     @endif
 
-    @include('partials.pagination_data',['passedAssets' => $officeGuides, 'container' => 'officeGuides', 'title' =>
+    {{-- @include('partials.pagination_data',['passedAssets' => $officeGuides, 'container' => 'officeGuides', 'title' =>
     'Microsoft
     office guides & courses'])
 
     @include('partials.pagination_data',['passedAssets' => $webGuides, 'container' => 'webGuides', 'title' => 'Web
-    Development guides & courses'])
+    Development guides & courses']) --}}
+    <assetsdeck title="General guides" url="{{ route('assets.general') }}"></assetsdeck>
+    <assetsdeck title="Office guides" url="{{ route('assets.office') }}"></assetsdeck>
+    <assetsdeck title="Web Development" url="{{ route('assets.webDev') }}"></assetsdeck>
+    <assetsdeck title="Front-end development" url="{{ route('assets.front-end') }}"></assetsdeck>
 </div>
 @endsection
 @section('scripts')

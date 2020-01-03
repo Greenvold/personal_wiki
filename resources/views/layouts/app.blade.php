@@ -87,8 +87,8 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('teacher.dashboard') }}">My Teacher
                                     Dashboard</a>
-                                <a class="dropdown-item" href="{{ route('guide.create') }}">Create guide</a>
-                                <a class="dropdown-item" href="{{ route('course.create') }}">Create Course</a>
+                                <a class="dropdown-item" href="{{ route('asset.create','guide') }}">Create guide</a>
+                                {{-- <a class="dropdown-item" href="{{ route('course.create') }}">Create Course</a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">My teacher profile</a>
                             </div>
@@ -118,8 +118,8 @@
             </div>
         </nav>
 
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
+
+
         <main class="">
             @if (session()->has('success') || session()->has('errors'))
             <div class="container mt-3">
@@ -162,8 +162,19 @@
         </main>
     </div>
     <!-- Scripts -->
+    <script>
+        window.AuthUser = '{!! auth()->user() !!}'
 
-
+        window.__auth = function () {
+            try {
+                return JSON.parse(AuthUser)
+            } catch (error) {
+                return null
+            }
+        } 
+    </script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
     <script type="text/javascript">
         $.ajaxSetup({
     headers: {

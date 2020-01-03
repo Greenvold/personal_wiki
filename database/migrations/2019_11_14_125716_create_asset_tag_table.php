@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseEpisodeTable extends Migration
+class CreateAssetTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateCourseEpisodeTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_episode', function (Blueprint $table) {
+        Schema::create('asset_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('course_id');
-            $table->integer('episode_id');
+            $table->uuid('asset_id');
+            $table->uuid('tag_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateCourseEpisodeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_episode');
+        Schema::dropIfExists('asset_tag');
     }
 }

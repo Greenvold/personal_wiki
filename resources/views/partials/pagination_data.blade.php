@@ -1,42 +1,46 @@
-<div id="{{$container}}">
-    <div class="row">
-        <div class="col-md-12 mt-4">
-            <h4 class="content-heading">{{$title}}</h4>
-            <hr class="shadow">
-            <div class="row animated fadeIn">
-                @forelse ($passedAssets as $asset)
-                <div class="col-lg-3 mb-3 col-md-3">
+{{-- <div id="{{$container}}">
+<div class="row">
+    <div class="col-md-12 mt-4">
+        <h4 class="content-heading">{{$title}}</h4>
+        <hr class="shadow">
+        <div class="row animated fadeIn">
+
+            @forelse ($passedAssets as $asset)
+            {{-- <div class="col-lg-3 mb-3 col-md-3">
                     <a href="
                     @if ($asset->type == 'guide')
                     {{ route('guide.preview', $asset->slug) }}
-                    @else
-                    {{ route('course.preview', $asset->slug) }}
-                    @endif" class="card asset shadow scale">
-                        @php
-                        if(rand(0,1) == 1)
-                        {
-                        echo '<div class="ribbon-free"><span>FREE</span></div>';
-                        }else{
-                        echo '<div class="ribbon-paid"><span>PAID</span></div>';
-                        }
-                        @endphp
-                        <img src="{{ asset('storage/' . $asset->image) }}" class="card-img-top" alt="...">
-                        <div class="card-body card-body-sm">
-                            <h5 class="card-title-lg">{{\Illuminate\Support\Str::limit($asset->title,35)}}</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                        </div>
-                    </a>
-                </div>
-                @empty
-                <div class="col-lg-12 text-center">
-                    <h4>Unfortunately there are no courses or guides for your search right now.</h4>
-                </div>
-                @endforelse
+            @else
+            {{ route('course.preview', $asset->slug) }}
+            @endif" class="card asset shadow scale">
+            @php
+            if(rand(0,1) == 1)
+            {
+            echo '<div class="ribbon-free"><span>FREE</span></div>';
+            }else{
+            echo '<div class="ribbon-paid"><span>PAID</span></div>';
+            }
+            @endphp
+            <img src="{{ asset('storage/' . $asset->image) }}" class="card-img-top" alt="...">
+            <div class="card-body card-body-sm">
+                <h5 class="card-title-lg">{{\Illuminate\Support\Str::limit($asset->title,35)}}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                    of the card's content.</p>
             </div>
-            <div class="d-flex justify-content-center mt-3">
-                {!! $passedAssets->links() !!}
-            </div>
+            </a>
+        </div> --}}
+
+        {{-- <asset-card :asset='{{$asset}}'></asset-card>
+        @empty
+        <div class="col-lg-12 text-center">
+            <h4>Unfortunately there are no courses or guides for your search right now.</h4>
         </div>
+        @endforelse
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        {!! $passedAssets->links() !!}
     </div>
 </div>
+</div>
+</div> --}}
+{{-- <assetsdeck :default_assets="{{$passedAssets}}"></assetsdeck> --}}

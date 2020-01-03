@@ -14,11 +14,11 @@ class CreateEpisodesTable extends Migration
     public function up()
     {
         Schema::create('episodes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->string('title');
             $table->string('slug');
             $table->text('short_description');
-            $table->integer('course_id');
+            $table->uuid('asset_id');
             $table->integer('order_number');
             $table->string('video');
             $table->timestamps();

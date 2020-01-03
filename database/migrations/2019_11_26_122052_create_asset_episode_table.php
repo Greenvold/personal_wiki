@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDislikesTable extends Migration
+class CreateAssetEpisodeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateDislikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dislikes', function (Blueprint $table) {
+        Schema::create('asset_episode', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('dislikeable_id');
-            $table->string('dislikeable_type');
+            $table->uuid('asset_id');
+            $table->uuid('episode_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateDislikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dislikes');
+        Schema::dropIfExists('asset_episode');
     }
 }

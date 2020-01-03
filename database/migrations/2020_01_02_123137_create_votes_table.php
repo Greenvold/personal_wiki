@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseEpisodeUserTable extends Migration
+class CreateVotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCourseEpisodeUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_episode_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('course_id');
-            $table->integer('episode_id');
-            $table->integer('user_id');
+        Schema::create('votes', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->enum('type', ['up', 'down'])->default('up');
+            $table->string('voteable_type');
+            $table->uuid('voteable_id');
+            $table->uuid('user_id');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCourseEpisodeUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_episode_user');
+        Schema::dropIfExists('votes');
     }
 }

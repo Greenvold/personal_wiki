@@ -1,4 +1,4 @@
-<div class="row mt-5">
+<div class="row mt-5 animated fadeIn">
     <div class="col-md-12 mb-3">
         <h3 class="content-heading"> Welcome back {{auth()->user()->name}}</h3>
         <small>Ready to jump back in?</small>

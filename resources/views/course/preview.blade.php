@@ -17,7 +17,7 @@ Course preview - {{$course->slug}}
                         <div class="col-md-4"></div>
                     </div>
                     {!!$course->short_description!!}
-                    <form action="{{ route('course.enroll',$course->slug) }}" method="POST">
+                    <form action="{{ route('asset.enroll',$course->slug) }}" method="POST">
                         @csrf
                         <button class="btn btn-success" type="submit">Enroll and go to course</button>
                     </form>
