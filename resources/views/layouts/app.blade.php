@@ -54,9 +54,6 @@
                         <li class="nav-item"><a href="{{route('home.contact')}}"
                                 class="nav-link {{Request::is('contact') ? 'active' : ''}}">Contact</a></li>
                     </ul>
-
-
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -88,7 +85,7 @@
                                 <a class="dropdown-item" href="{{ route('teacher.dashboard') }}">My Teacher
                                     Dashboard</a>
                                 <a class="dropdown-item" href="{{ route('asset.create','guide') }}">Create guide</a>
-                                {{-- <a class="dropdown-item" href="{{ route('course.create') }}">Create Course</a> --}}
+                                <a class="dropdown-item" href="{{ route('asset.create','course') }}">Create Course</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disabled" href="#">My teacher profile</a>
                             </div>
@@ -117,9 +114,6 @@
                 </div>
             </div>
         </nav>
-
-
-
         <main class="">
             @if (session()->has('success') || session()->has('errors'))
             <div class="container mt-3">
@@ -151,13 +145,10 @@
                         </script>
                         @endforeach
                         @endif
-
-
                     </div>
                 </div>
             </div>
             @endif
-
             @yield('content')
         </main>
     </div>

@@ -12,6 +12,10 @@ Vue.component("assetsdeck", require("./components/assetsdeck.vue").default);
 
 Vue.component("asset-card", require("./components/asset_card.vue").default);
 
+Vue.component(
+    "bottombanner",
+    require("./components/bottom_banner.vue").default
+);
 const app = new Vue({
     el: "#app"
 });

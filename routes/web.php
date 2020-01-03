@@ -20,7 +20,7 @@ Auth::routes(['verify' => true]);
 //Home controller
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home/fetch_data', 'AssetController@fetch_data');
+// Route::get('/home/fetch_data', 'AssetController@fetch_data');
 
 Route::get('/get-started', 'HomeController@getStarted')->name('home.get-started');
 
@@ -69,6 +69,10 @@ Route::middleware(['auth'])->group(function () {
 
     //votes
     Route::post('/vote/{entityId}/{entityType}/{type}', 'VoteController@vote');
+
+    //users api
+
+    Route::get('/assets/myassets', 'AssetController@myAssets')->name('assets.myassets');
 });
 
 

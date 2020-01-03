@@ -94,29 +94,29 @@ class User extends Authenticatable implements MustVerifyEmail
         return $recentViewedCourses->merge($recentViewedGuides);
     }
 
-    public function scopeMyAssets($query)
-    {
-        $search = request()->query('search');
+    // public function scopeMyAssets($query)
+    // {
+    //     $search = request()->query('search');
 
-        if ($search) {
+    //     if ($search) {
 
-            $guides = auth()->user()->guides()->where('title', 'LIKE', "%{$search}%")->orWhereHas('tags', function ($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%");
-            });
+    //         $guides = auth()->user()->guides()->where('title', 'LIKE', "%{$search}%")->orWhereHas('tags', function ($q) use ($search) {
+    //             $q->where('title', 'LIKE', "%{$search}%");
+    //         });
 
-            $courses = auth()->user()->courses()->where('title', 'LIKE', "%{$search}%")->orWhereHas('tags', function ($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%");
-            });
+    //         $courses = auth()->user()->courses()->where('title', 'LIKE', "%{$search}%")->orWhereHas('tags', function ($q) use ($search) {
+    //             $q->where('title', 'LIKE', "%{$search}%");
+    //         });
 
-            return $courses->union($guides)->simplePaginate(6);
-        } else {
-            $guides =  auth()->user()->guides();
+    //         return $courses->union($guides)->simplePaginate(6);
+    //     } else {
+    //         $guides =  auth()->user()->guides();
 
-            $courses =   auth()->user()->courses();
+    //         $courses =   auth()->user()->courses();
 
-            return $guides->union($courses)->simplePaginate(6);
-        }
-    }
+    //         return $guides->union($courses)->simplePaginate(6);
+    //     }
+    // }
 
     public function coursesViewed()
     {
@@ -153,10 +153,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function enrolled($asset)
     {
-        return $this->assets()->where('asset_id', $asset->id)->exists();
+        return $this->enrolledAssets()->where('asset_id', $asset->id)->exists();
     }
 
     public function assets()
+    {
+        return $this->hasMany(Asset::class);
+    }
+
+    public function enrolledAssets()
     {
         return $this->belongsToMany(Asset::class);
     }

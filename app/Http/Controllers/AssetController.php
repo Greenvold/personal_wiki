@@ -10,6 +10,7 @@ use App\Notifications\NewEnrolment;
 use App\Recent;
 use App\Tag;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class AssetController extends Controller
 {
@@ -24,6 +25,7 @@ class AssetController extends Controller
 
     public function show(Asset $asset)
     {
+
         if (!auth()->user()) {
             if ($asset->type == 'guide') {
                 return view('guide.preview', [
@@ -83,7 +85,9 @@ class AssetController extends Controller
                 'tags' => Tag::all()
             ]);
         } else {
-            return view('course.create');
+            return view('course.create', [
+                'tags' => Tag::all()
+            ]);
         }
     }
 
@@ -107,6 +111,7 @@ class AssetController extends Controller
 
     public function webDevAssets()
     {
+
         $assets = Asset::belongsToTag($this->web);
 
         return ResourcesAsset::collection($assets);
@@ -119,6 +124,11 @@ class AssetController extends Controller
         return ResourcesAsset::collection($assets);
     }
 
+    public function myAssets()
+    {
+        $assets = auth()->user()->enrolledAssets()->paginate(3);
+        return ResourcesAsset::collection($assets);
+    }
     public function enroll(Asset $asset)
     {
         $asset->users()->attach(auth()->user()->id);

@@ -9,7 +9,7 @@ New Course
             <div class="card animated fadeIn">
                 <div class="card-header">New Course</div>
                 <div class="card-body">
-                    <form action="{{isset($course) ? route('course.update',$course->slug) : route('course.store')}}"
+                    <form action="{{isset($course) ? route('asset.update',$course->slug) : route('asset.store')}}"
                         enctype="multipart/form-data" method="POST">
                         @csrf
                         @isset($course)
